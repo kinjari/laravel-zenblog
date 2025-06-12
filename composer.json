@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "kinjari/laravel-zenblog",
+    "description": "A Laravel package for using Zenblog in your projects.",
     "keywords": [
-        ":vendor_name",
+        "kinjari",
         "laravel",
-        ":package_slug"
+        "laravel-zenblog"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/kinjari/laravel-zenblog",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "kinjari",
+            "email": "support@kinjari.com",
             "role": "Developer"
         }
     ],
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Kinjari\\LaravelZenblog\\": "src/",
+            "Kinjari\\LaravelZenblog\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Kinjari\\LaravelZenblog\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -63,10 +63,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Kinjari\\LaravelZenblog\\LaravelZenblogServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "LaravelZenblog": "Kinjari\\LaravelZenblog\\Facades\\LaravelZenblog"
             }
         }
     },

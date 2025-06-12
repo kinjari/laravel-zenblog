@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Kinjari\LaravelZenblog\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelZenblogCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-zenblog';
 
     public $description = 'My command';
 
