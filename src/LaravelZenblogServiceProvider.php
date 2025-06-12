@@ -2,9 +2,9 @@
 
 namespace Kinjari\LaravelZenblog;
 
+use Kinjari\LaravelZenblog\Commands\LaravelZenblogCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Kinjari\LaravelZenblog\Commands\LaravelZenblogCommand;
 
 class LaravelZenblogServiceProvider extends PackageServiceProvider
 {
