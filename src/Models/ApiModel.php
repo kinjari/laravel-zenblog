@@ -2,8 +2,6 @@
 
 namespace Kinjari\LaravelZenblog\Models;
 
-use Illuminate\Support\Facades\Http;
-
 abstract class ApiModel
 {
     protected array $attributes = [];
@@ -20,7 +18,7 @@ abstract class ApiModel
 
     public static function getApiUrl(string $path = ''): string
     {
-        return config('zenblog.api_url') . '/' . $path;
+        return config('zenblog.api_url').'/'.$path;
     }
 
     public static function getApiHeaders(): array
@@ -32,7 +30,7 @@ abstract class ApiModel
 
     public static function hydrateCollection(array $items): \Illuminate\Support\Collection
     {
-        return collect($items)->map(fn($item) => new static($item));
+        return collect($items)->map(fn ($item) => new static($item));
     }
 
     public static function paginate($perPage = 10, $page = 1, $endpoint = null)
@@ -45,6 +43,7 @@ abstract class ApiModel
             ]);
         $json = $response->json();
         $items = $json['data'] ?? $json['items'] ?? $json;
+
         return new \Kinjari\LaravelZenblog\Support\ZenblogPaginator(
             static::hydrateCollection($items),
             $json['total'] ?? null,

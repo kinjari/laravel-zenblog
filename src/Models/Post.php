@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Http;
 
 class Post extends ApiModel
 {
-
     public static function all()
     {
         $response = Http::withHeaders(static::getApiHeaders())
@@ -36,5 +35,4 @@ class Post extends ApiModel
     {
         return parent::paginate($perPage, $page, $endpoint ?? 'posts');
     }
-
 }

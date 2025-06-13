@@ -7,9 +7,13 @@ use Illuminate\Support\Collection;
 class ZenblogPaginator
 {
     public Collection $items;
+
     public $total;
+
     public $per_page;
+
     public $current_page;
+
     public $last_page;
 
     public function __construct(Collection $items, $total = null, $per_page = null, $current_page = null, $last_page = null)
@@ -36,4 +40,4 @@ class ZenblogPaginator
             'last_page' => $this->last_page,
         ];
     }
-} 
+}
