@@ -49,7 +49,7 @@ abstract class ApiModel
         $items = $json['data'] ?? $json['items'] ?? $json['posts'] ?? $json;
 
         // Ensure items is always an array
-        if ($items === null || !is_array($items)) {
+        if ($items === null || ! is_array($items)) {
             $items = [];
         }
 
