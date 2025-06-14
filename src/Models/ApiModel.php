@@ -41,11 +41,11 @@ abstract class ApiModel
                 'offset' => ($page - 1) * $perPage,
                 'limit' => $perPage,
             ]);
-        
+
         $json = $response->json();
-        
+
         // Check if the response contains an error message or no data
-        if (isset($json['message']) || empty($json) || !is_array($json)) {
+        if (isset($json['message']) || empty($json) || ! is_array($json)) {
             // Return empty paginator when no data found
             return new \Kinjari\LaravelZenblog\Support\ZenblogPaginator(
                 collect([]),
@@ -55,18 +55,18 @@ abstract class ApiModel
                 0
             );
         }
-        
+
         // Handle different possible response structures
         $items = $json['data'] ?? $json['items'] ?? $json['posts'] ?? $json;
-        
+
         // Ensure items is always an array and contains actual data
-        if ($items === null || !is_array($items) || (is_array($items) && isset($items['message']))) {
+        if ($items === null || ! is_array($items) || (is_array($items) && isset($items['message']))) {
             $items = [];
         }
-        
+
         // Extract pagination info from different possible structures
         $pagination = $json['pagination'] ?? [];
-        
+
         return new \Kinjari\LaravelZenblog\Support\ZenblogPaginator(
             static::hydrateCollection($items),
             $pagination['total'] ?? $json['total'] ?? count($items),
