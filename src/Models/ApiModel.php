@@ -35,21 +35,33 @@ abstract class ApiModel
 
     public static function paginate($perPage = 10, $page = 1, $endpoint = null)
     {
+
         $endpoint = $endpoint ?? static::getEndpoint();
         $response = \Illuminate\Support\Facades\Http::withHeaders(static::getApiHeaders())
             ->get(static::getApiUrl($endpoint), [
-                'per_page' => $perPage,
-                'page' => $page,
+                'offset' => ($page * $perPage) - 1,
+                'limit' => $perPage,
             ]);
+
         $json = $response->json();
-        $items = $json['data'] ?? $json['items'] ?? $json;
+
+        // Handle different possible response structures
+        $items = $json['data'] ?? $json['items'] ?? $json['posts'] ?? $json;
+
+        // Ensure items is always an array
+        if ($items === null || !is_array($items)) {
+            $items = [];
+        }
+
+        // Extract pagination info from different possible structures
+        $pagination = $json['pagination'] ?? [];
 
         return new \Kinjari\LaravelZenblog\Support\ZenblogPaginator(
             static::hydrateCollection($items),
-            $json['total'] ?? null,
-            $json['per_page'] ?? $perPage,
-            $json['current_page'] ?? $page,
-            $json['last_page'] ?? null
+            $pagination['total'] ?? $json['total'] ?? count($items),
+            $pagination['limit'] ?? $json['per_page'] ?? $perPage,
+            $pagination['page'] ?? $json['current_page'] ?? $page,
+            $pagination['totalPages'] ?? $json['last_page'] ?? null
         );
     }
 
