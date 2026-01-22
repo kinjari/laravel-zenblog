@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/kinjari/laravel-zenblog/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/kinjari/laravel-zenblog/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/kinjari/laravel-zenblog.svg?style=flat-square)](https://packagist.org/packages/kinjari/laravel-zenblog)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A Laravel package that provides a simple and elegant interface to interact with the Zenblog API. Fetch posts, categories, tags, and authors with ease using Laravel's familiar syntax.
 
 ## Support us
 
@@ -40,8 +40,24 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'api_url' => env('ZENBLOG_API_URL', 'https://demo.zenblog.org/api'),
+    'blog_id' => env('ZENBLOG_BLOG_ID', null),
 ];
 ```
+
+## Configuration
+
+Add these environment variables to your `.env` file:
+
+```bash
+# Required: Your Zenblog API URL
+ZENBLOG_API_URL=https://your-blog.zenblog.com/api
+
+# Optional: Your Blog ID for authentication (if required by your Zenblog instance)
+ZENBLOG_BLOG_ID=your-blog-id-from-dashboard
+```
+
+The `blog_id` is required for most Zenblog installations and will be included in the API URL path as `/blogs/{blog_id}/...`. You can find your blog ID in the Zenblog dashboard.
 
 Optionally, you can publish the views using
 
@@ -51,9 +67,76 @@ php artisan vendor:publish --tag="laravel-zenblog-views"
 
 ## Usage
 
+The package provides four models to interact with the Zenblog API: `Post`, `Category`, `Tag`, and `Author`. Each model supports the same methods for fetching data.
+
+### Posts
+
 ```php
-$laravelZenblog = new Kinjari\LaravelZenblog();
-echo $laravelZenblog->echoPhrase('Hello, Kinjari!');
+use Kinjari\LaravelZenblog\Models\Post;
+
+// Get all posts
+$posts = Post::all();
+
+// Find a specific post by slug
+$post = Post::find('my-blog-post');
+
+// Get paginated posts
+$paginatedPosts = Post::paginate(10, 1); // 10 per page, page 1
+```
+
+### Categories
+
+```php
+use Kinjari\LaravelZenblog\Models\Category;
+
+// Get all categories
+$categories = Category::all();
+
+// Get paginated categories
+$paginatedCategories = Category::paginate(10, 1);
+```
+
+### Tags
+
+```php
+use Kinjari\LaravelZenblog\Models\Tag;
+
+// Get all tags
+$tags = Tag::all();
+
+// Get paginated tags
+$paginatedTags = Tag::paginate(10, 1);
+```
+
+### Authors
+
+```php
+use Kinjari\LaravelZenblog\Models\Author;
+
+// Get all authors
+$authors = Author::all();
+
+// Find a specific author by slug
+$author = Author::find('john-doe');
+
+// Get paginated authors
+$paginatedAuthors = Author::paginate(10, 1);
+```
+
+### Working with Results
+
+All models return collections or individual model instances with accessible attributes:
+
+```php
+$post = Post::find('my-blog-post');
+echo $post->title;
+echo $post->content;
+echo $post->slug;
+
+$posts = Post::all();
+foreach ($posts as $post) {
+    echo $post->title;
+}
 ```
 
 ## Testing

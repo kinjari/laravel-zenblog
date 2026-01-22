@@ -18,7 +18,14 @@ abstract class ApiModel
 
     public static function getApiUrl(string $path = ''): string
     {
-        return config('zenblog.api_url').'/'.$path;
+        $baseUrl = config('zenblog.api_url');
+        $blogId = config('zenblog.blog_id');
+
+        if ($blogId) {
+            return "{$baseUrl}/blogs/{$blogId}/{$path}";
+        }
+
+        return "{$baseUrl}/{$path}";
     }
 
     public static function getApiHeaders(): array
